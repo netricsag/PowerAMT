@@ -23,5 +23,4 @@ if ((Test-Path -Path $publicFuncFolderPath) -and ($publicFunctionNames = Get-Chi
     $funcStrings = $null
 }
 
-$manifestContent = $manifestContent -replace "'<FunctionsToExport>'", $funcStrings
 $manifestContent | Set-Content -Path $manifestPath

@@ -1,6 +1,7 @@
 # PowerAMT
 
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PowerAMT)
+![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/PowerAMT)
 
 ## Overview
 
