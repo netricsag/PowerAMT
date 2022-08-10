@@ -26,8 +26,8 @@ C:\> Install-Module -Name PowerAMT
 
 ## Todos:
 
+- Documentation
 - Implement Set-AMTDevice function to update device details
 - Implement RPS functions
 
-[psgallery-dl-badge]: https://img.shields.io/powershellgallery/dt/PowerAMT.svg?logo=powershell
-[powershell-gallery]: https://www.powershellgallery.com/packages/PowerAMT/
+![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PowerAMT)
