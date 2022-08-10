@@ -1,5 +1,7 @@
 # PowerAMT
 
+![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PowerAMT)
+
 ## Overview
 
 This PowerShell module is a simple wrapper for the [Intel Open AMT Cloud Toolkit](https://github.com/open-amt-cloud-toolkit/open-amt-cloud-toolkit) API.
@@ -29,5 +31,3 @@ C:\> Install-Module -Name PowerAMT
 - Documentation
 - Implement Set-AMTDevice function to update device details
 - Implement RPS functions
-
-![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PowerAMT)
