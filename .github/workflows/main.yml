@@ -15,4 +15,4 @@ jobs:
         shell: pwsh
         run: |
           ./build_scripts/build.ps1
-          Publish-Module -path ./michaelmumenthaler -NuGetApiKey $env:NUGET_KEY -Verbose
+          Publish-Module -path ./PowerAMT -NuGetApiKey $env:NUGET_KEY -Verbose
