@@ -1,5 +1,6 @@
 # PowerAMT
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/netricsag/PowerAMT/CI)
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PowerAMT)
 ![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/PowerAMT)
 
@@ -25,7 +26,7 @@ C:\> Install-Module -Name PowerAMT
 
 ## Maintainer
 
-- [Michael Mumenthaler]("https://github.com/michaelmumenthaler") [![https://github.com/falkheiland][github-fh-badge]][github-fh]
+- [Michael Mumenthaler]("https://github.com/michaelmumenthaler")
 
 ## Todos:
 
