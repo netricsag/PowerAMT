@@ -11,14 +11,44 @@ function Get-AMTDevice {
     $headers.Add("Authorization", "Bearer $($Global:AMTSession.Token)")
     
     if(-not $Name -and -not $GUID) {
-        return Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/") -Method GET -Headers $headers | Format-Table *
+        $returnArray = @()
+        $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/") -Method GET -Headers $headers
+
+        foreach($Response in $ResponseArray){
+            $returnObject = New-Object -TypeName PSObject -Property @{
+                "GUID" = $Response.GUID
+                "Hostname" = $Response.hostname
+                "Tags" = $Response.tags
+                "MPSInstance" = $Response.MPSInstance
+                "ConnectionStatus" = $Response.ConnectionStatus
+                "MPSUsername" = $Response.MPSUsername
+                "TenantID" = $Response.tenantid
+            }
+            $returnArray += $returnObject
+        }
+        return $returnArray
     }
 
     if($null -ne $Name -and  $Name -ne ""){
-        return ((Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/") -Method GET -Headers $headers) | Where-Object {$_.hostname -eq $Name}) | Format-Table *
+        $returnArray = @()
+        $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/") -Method GET -Headers $headers
+        
+        foreach($Response in $ResponseArray){
+            $returnObject = New-Object -TypeName PSObject -Property @{
+                "GUID" = $Response.GUID
+                "Hostname" = $Response.hostname
+                "Tags" = $Response.tags
+                "MPSInstance" = $Response.MPSInstance
+                "ConnectionStatus" = $Response.ConnectionStatus
+                "MPSUsername" = $Response.MPSUsername
+                "TenantID" = $Response.tenantid
+            }
+            $returnArray += $returnObject
+        }
+        return $returnArray | Where-Object {$_.hostname -eq $Name}
     }
 
     if($null -ne $GUID -and $GUID -ne ""){
-        return (Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/$GUID") -Method GET -Headers $headers) | Format-Table *
+        return (Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/$GUID") -Method GET -Headers $headers)
     }
 }
