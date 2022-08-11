@@ -13,12 +13,12 @@ In the current build only MPS functions (device management) are supported. RPS f
 
 ## Requirements
 
-- PowerShell 5 or higher
+- PowerShell 5.1 or higher (Version 3 might work but it's not tested and not supported)
 - [Intel Open AMT Cloud Toolkit](https://github.com/open-amt-cloud-toolkit/open-amt-cloud-toolkit)
 
 ## Installation
 
-If you have the PowerShellGet module installed or PowerShell 5 or higher you can enter the following command:
+If you have the PowerShellGet module installed or PowerShell 5.1 or higher you can enter the following command:
 
 ```powershell
 C:\> Install-Module -Name PowerAMT
@@ -31,5 +31,4 @@ C:\> Install-Module -Name PowerAMT
 ## Todos:
 
 - Documentation
-- Implement Set-AMTDevice function to update device details
 - Implement RPS functions
