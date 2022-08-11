@@ -24,11 +24,18 @@ If you have the PowerShellGet module installed or PowerShell 5.1 or higher you c
 C:\> Install-Module -Name PowerAMT
 ```
 
+## Documentation
+
+The documentation is currently only available via the Get-Help command.
+
+```PowerShell
+PS> Get-Help Get-AMTDevices
+```
+
 ## Maintainer
 
 - [Michael Mumenthaler](https://github.com/michaelmumenthaler)
 
 ## Todos:
 
-- Documentation
 - Implement RPS functions
