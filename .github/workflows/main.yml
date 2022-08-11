@@ -11,8 +11,8 @@ jobs:
       - name: Build and publish
         env:
           NUGET_KEY: ${{ secrets.PSGALLERYAPIKEY }}
-          BUILDVER: "1.1.0"
+          BUILDVER: "1.1.2"
         shell: pwsh
         run: |
           ./build_scripts/build.ps1
-          Publish-Module -path ./PowerAMT -NuGetApiKey $env:NUGET_KEY -Verbose
+          Publish-Module -path ./PowerAMT -NuGetApiKey $env:NUGET_KEY -ProjectUri 'https://github.com/netricsag/PowerAMT' -Tags "intel","AMT","OpenAMT","Open amt","OACT" -Verbose
