@@ -26,7 +26,7 @@ C:\> Install-Module -Name PowerAMT
 
 ## Maintainer
 
-- [Michael Mumenthaler]("https://github.com/michaelmumenthaler")
+- [Michael Mumenthaler](https://github.com/michaelmumenthaler)
 
 ## Todos:
 

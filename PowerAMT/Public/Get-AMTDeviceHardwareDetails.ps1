@@ -1,6 +1,6 @@
 function Get-AMTDeviceDetail {
     param (
-        [Parameter(Mandatory)][string]$GUID
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)][string]$GUID
     )
 
     if($null -eq $Global:AMTSession){
