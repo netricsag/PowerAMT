@@ -14,5 +14,6 @@ jobs:
           BUILDVER: ${{ github.ref }}
         shell: pwsh
         run: |
+          echo $env:BUILDVER
           ./build_scripts/build.ps1
-          Publish-Module -path ./PowerAMT -NuGetApiKey $env:NUGET_KEY -ProjectUri 'https://github.com/netricsag/PowerAMT' -Tags "intel","AMT","OpenAMT","Open amt","OACT" -Verbose
+          # Publish-Module -path ./PowerAMT -NuGetApiKey $env:NUGET_KEY -ProjectUri 'https://github.com/netricsag/PowerAMT' -Tags "intel","AMT","OpenAMT","Open amt","OACT" -Verbose
