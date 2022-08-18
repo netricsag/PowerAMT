@@ -106,7 +106,7 @@ function Set-AMTDevice {
             $body = $body | ConvertTo-Json
     
             if($null -ne $GUID -and $GUID -ne ""){
-                return (Invoke-RestMethod -Uri 'https://192.168.200.200/mps/api/v1/devices' -Method PATCH -Headers $headers -ContentType 'application/json' -Body $body)
+                return (Invoke-RestMethod -Uri ("https://"+ $Global:AMTSession.Address + "/mps/api/v1/devices") -Method PATCH -Headers $headers -ContentType 'application/json' -Body $body)
             }
         }
     }
