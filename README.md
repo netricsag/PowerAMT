@@ -1,6 +1,6 @@
 # PowerAMT
 
-![Github Workflow](https://github.com/netricsag/PowerAMT/actions/workflows/main.yml/badge.svg)
+[![CI](https://github.com/netricsag/PowerAMT/actions/workflows/main.yml/badge.svg)](https://github.com/netricsag/PowerAMT/actions/workflows/main.yml)
 ![GitHub all releases](https://img.shields.io/github/downloads/netricsag/PowerAMT/total?label=Downloads&logo=github)
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PowerAMT?label=Downloads&logo=powershell)
 ![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/PowerAMT?label=PowerShell%20Gallery&logo=powerShell)
