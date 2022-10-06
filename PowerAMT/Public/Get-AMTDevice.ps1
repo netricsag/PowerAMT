@@ -12,6 +12,9 @@ function Get-AMTDevice {
         .PARAMETER GUID
         Specify a device GUID to only return a specific device.
 
+        .PARAMETER Limit
+        By default, 1000 devices are returned. Use this parameter to limit the number of devices returned.
+
         .INPUTS
         You can pipe one or more device names into Get-AMTDevice.
 
@@ -86,7 +89,8 @@ function Get-AMTDevice {
 
     param (
         [Parameter(ValueFromPipeline,ValueFromPipelineByPropertyName)][string]$Name,
-        [Parameter(ValueFromPipelineByPropertyName)][string]$GUID
+        [Parameter(ValueFromPipelineByPropertyName)][string]$GUID,
+        [int]$Limit = 1000
     )
 
     begin {
@@ -120,7 +124,7 @@ function Get-AMTDevice {
     
         if($null -ne $Name -and  $Name -ne ""){
             $returnArray = @()
-            $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/") -Method GET -Headers $headers
+            $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?`$top=$Limit") -Method GET -Headers $headers
             
             foreach($Response in $ResponseArray){
                 $returnObject = New-Object -TypeName PSObject -Property @{
