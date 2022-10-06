@@ -105,7 +105,7 @@ function Get-AMTDevice {
         
         if(-not $Name -and -not $GUID) {
             $returnArray = @()
-            $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices%24top=$Limit") -Method GET -Headers $headers
+            $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit") -Method GET -Headers $headers
     
             foreach($Response in $ResponseArray){
                 $returnObject = New-Object -TypeName PSObject -Property @{
