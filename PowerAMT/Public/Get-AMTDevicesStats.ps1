@@ -29,6 +29,14 @@ function Get-AMTDevicesStats {
     $headers=@{}
     $headers.Add("Authorization", "Bearer $($Global:AMTSession.Token)")
 
-    return (Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/stats") -Method GET -Headers $headers)
+    $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/stats"
+
+    if ($PSVersionTable.PSVersion.Major -le 5){
+        $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers
+    } else {
+        $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -SkipCertificateCheck
+    }
+
+    return $Response
 
 }

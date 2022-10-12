@@ -48,6 +48,8 @@ function Connect-AMTManagement {
     [Parameter(Mandatory)][string]$AMTPassword
     )
 
+    if ($PSVersionTable.PSVersion.Major -le 5) {
+  
     add-type @"
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
@@ -79,4 +81,25 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
         }
         $Global:AMTSession | Format-Table
     }
+} elseif ($psversiontable.PSVersion.Major -gt 5) {
+    $headers=@{}
+    $headers.Add("Content-Type", "application/json")
+
+    $Body = @{
+        "username"=$AMTUsername
+        "password"=$AMTPassword
+    } | ConvertTo-Json
+
+    $Response = Invoke-RestMethod -Uri ("https://" + $AMTManagementAddress + "/mps/login/api/v1/authorize") -Method POST -UseBasicParsing `
+    -Body $Body -ContentType 'application/json' -Headers $headers -SkipCertificateCheck
+
+    if($?){
+        $Global:AMTSession = New-Object -TypeName PSObject -Property @{
+            "Address"=$AMTManagementAddress
+            "Token"=$Response.token
+        }
+        $Global:AMTSession | Format-Table
+    }
+ }
+
 }
