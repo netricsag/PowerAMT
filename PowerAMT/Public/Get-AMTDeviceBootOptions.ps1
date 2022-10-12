@@ -112,8 +112,15 @@ function Get-AMTDeviceBootOptions {
         $headers=@{}
         $headers.Add("Authorization", "Bearer $($Global:AMTSession.Token)")
     
+        $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/amt/power/capabilities/$GUID"
+
         if($null -ne $GUID -and $GUID -ne ""){
-            return (Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/amt/power/capabilities/$GUID") -Method GET -Headers $headers)
+            if ($PSVersionTable.PSVersion.Major -le 5) {
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers
+            } else {
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -SkipCertificateCheck
+            }
+            return $Response
         }
     }
 }

@@ -70,8 +70,17 @@ function Restart-AMTDevice {
             } | ConvertTo-Json
         
             if($null -ne $GUID -and $GUID -ne ""){
-                $Response = (Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/amt/power/action/$device") -Method POST `
-                -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body).body
+
+                $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/amt/power/action/$device"
+
+                if ($PSVersionTable.PSVersion.Major -le 5){
+                    $Response = (Invoke-RestMethod -Uri $uri -Method POST `
+                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body).body
+                } else {
+                    $Response = (Invoke-RestMethod -Uri $uri -Method POST `
+                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body -SkipCertificateCheck).body
+                }
+
                 $ReturnObject = New-Object -TypeName PSObject -Property @{
                     GUID = $device
                     ReturnValue = $Response.ReturnValue

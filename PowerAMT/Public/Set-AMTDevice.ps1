@@ -106,7 +106,15 @@ function Set-AMTDevice {
             $body = $body | ConvertTo-Json
     
             if($null -ne $GUID -and $GUID -ne ""){
-                return (Invoke-RestMethod -Uri ("https://"+ $Global:AMTSession.Address + "/mps/api/v1/devices") -Method PATCH -Headers $headers -ContentType 'application/json' -Body $body)
+                $uri = "https://"+ $Global:AMTSession.Address + "/mps/api/v1/devices"
+
+                if ($PSVersionTable.PSVersion.Major -le 5){
+                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $headers -ContentType 'application/json' -Body $body
+                } else {
+                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $headers -ContentType 'application/json' -Body $body -SkipCertificateCheck
+                }
+
+                return $Response
             }
         }
     }

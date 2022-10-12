@@ -58,6 +58,14 @@ function Get-AMTDeviceDetail {
     $headers.Add("Authorization", "Bearer $($Global:AMTSession.Token)")
 
     if($null -ne $GUID -and $GUID -ne ""){
-        return (Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/amt/hardwareInfo/$GUID") -Method GET -Headers $headers)
+        $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/amt/hardwareInfo/$GUID"
+        
+        if ($PSVersionTable.PSVersion.Major -le 5) {
+            $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method GET
+        } else {
+            $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method GET -SkipCertificateCheck
+        }
+
+        return $response.content | ConvertFrom-Json
     }
 }

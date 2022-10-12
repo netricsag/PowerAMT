@@ -105,8 +105,11 @@ function Get-AMTDevice {
         
         if(-not $Name -and -not $GUID) {
             $returnArray = @()
-            $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit") -Method GET -Headers $headers
-    
+            if($PSVersionTable.PSVersion.Major -le 5) {
+                $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit") -Method GET -Headers $headers
+            } else {
+                $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit") -Method GET -Headers $headers -SkipCertificateCheck
+            }
             foreach($Response in $ResponseArray){
                 $returnObject = New-Object -TypeName PSObject -Property @{
                     "GUID" = $Response.GUID
@@ -123,9 +126,14 @@ function Get-AMTDevice {
         }
     
         if($null -ne $Name -and  $Name -ne ""){
+            $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit"
             $returnArray = @()
-            $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit") -Method GET -Headers $headers
-            
+
+            if($PSVersionTable.PSVersion.Major -le 5) {
+                $ResponseArray = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers
+            } else {
+                $ResponseArray = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -SkipCertificateCheck
+            }
             foreach($Response in $ResponseArray){
                 $returnObject = New-Object -TypeName PSObject -Property @{
                     "GUID" = $Response.GUID
@@ -142,7 +150,13 @@ function Get-AMTDevice {
         }
     
         if($null -ne $GUID -and $GUID -ne ""){
-            return (Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/$GUID") -Method GET -Headers $headers)
+            $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/" + $GUID
+            if ($psversiontable.PSVersion.Major -le 5) {
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers
+            } else {
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -SkipCertificateCheck
+            }
+            return $Response
         }
     }
     
