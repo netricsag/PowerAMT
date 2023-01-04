@@ -116,9 +116,9 @@ function Get-AMTDeviceBootOptions {
 
         if($null -ne $GUID -and $GUID -ne ""){
             if ($PSVersionTable.PSVersion.Major -le 5) {
-                $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -TimeoutSec 5
             } else {
-                $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -SkipCertificateCheck
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -SkipCertificateCheck -TimeoutSec 5
             }
             return $Response
         }

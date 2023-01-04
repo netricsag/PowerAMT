@@ -72,7 +72,7 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
     } | ConvertTo-Json
 
     $Response = Invoke-RestMethod -Uri ("https://" + $AMTManagementAddress + "/mps/login/api/v1/authorize") -Method POST -UseBasicParsing `
-    -Body $Body -ContentType 'application/json' -Headers $headers
+    -Body $Body -ContentType 'application/json' -Headers $headers -TimeoutSec 5
 
     if($?){
         $Global:AMTSession = New-Object -TypeName PSObject -Property @{
@@ -91,7 +91,7 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
     } | ConvertTo-Json
 
     $Response = Invoke-RestMethod -Uri ("https://" + $AMTManagementAddress + "/mps/login/api/v1/authorize") -Method POST -UseBasicParsing `
-    -Body $Body -ContentType 'application/json' -Headers $headers -SkipCertificateCheck
+    -Body $Body -ContentType 'application/json' -Headers $headers -TimeoutSec 5 -SkipCertificateCheck
 
     if($?){
         $Global:AMTSession = New-Object -TypeName PSObject -Property @{

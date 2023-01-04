@@ -109,9 +109,9 @@ function Set-AMTDevice {
                 $uri = "https://"+ $Global:AMTSession.Address + "/mps/api/v1/devices"
 
                 if ($PSVersionTable.PSVersion.Major -le 5){
-                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $headers -ContentType 'application/json' -Body $body
+                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $headers -ContentType 'application/json' -Body $body -TimeoutSec 5
                 } else {
-                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $headers -ContentType 'application/json' -Body $body -SkipCertificateCheck
+                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -Headers $headers -ContentType 'application/json' -Body $body -SkipCertificateCheck -TimeoutSec 5
                 }
 
                 return $Response
