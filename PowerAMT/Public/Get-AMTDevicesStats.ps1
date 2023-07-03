@@ -32,9 +32,9 @@ function Get-AMTDevicesStats {
     $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/stats"
 
     if ($PSVersionTable.PSVersion.Major -le 5){
-        $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -TimeoutSec 5
+        $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -TimeoutSec 5
     } else {
-        $Response = Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -SkipCertificateCheck -TimeoutSec 5
+        $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec 5
     }
 
     return $Response

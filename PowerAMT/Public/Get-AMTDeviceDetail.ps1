@@ -61,9 +61,9 @@ function Get-AMTDeviceDetail {
         $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/amt/hardwareInfo/$GUID"
         
         if ($PSVersionTable.PSVersion.Major -le 5) {
-            $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method GET -TimeoutSec 5
+            $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method GET -UseBasicParsing -TimeoutSec 5
         } else {
-            $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method GET -SkipCertificateCheck -TimeoutSec 5
+            $response = Invoke-WebRequest -Uri $uri -Headers $headers -Method GET -UseBasicParsing -SkipCertificateCheck -TimeoutSec 5
         }
 
         return $response.content | ConvertFrom-Json

@@ -71,9 +71,9 @@ function Get-AMTDevicePowerState {
         if($null -ne $GUID -and $GUID -ne ""){
             $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/amt/power/state/$GUID"
             if ($PSVersionTable.PSVersion.Major -le 5) {
-                $CurrentPowerState = (Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -TimeoutSec 5).powerstate
+                $CurrentPowerState = (Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -TimeoutSec 5).powerstate
             } else {
-                $CurrentPowerState = (Invoke-RestMethod -Uri $uri -Method GET -Headers $headers -SkipCertificateCheck -TimeoutSec 5).powerstate
+                $CurrentPowerState = (Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec 5).powerstate
             }
             $ReturnObject = New-Object -TypeName psobject -Property @{
                 GUID = $GUID
