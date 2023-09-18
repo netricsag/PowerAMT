@@ -43,10 +43,11 @@ function Connect-AMTManagement {
     #>
 
     param(
-    [Parameter(Mandatory)][string] $AMTManagementAddress,
-    [Parameter(Mandatory)][string]$AMTUsername,
-    [Parameter(Mandatory)][string]$AMTPassword
+        [Parameter(Mandatory)][string] $AMTManagementAddress,
+        [Parameter(Mandatory)][string]$AMTUsername,
+        [Parameter(Mandatory)][securestring]$AMTPassword
     )
+    
 
     if ($PSVersionTable.PSVersion.Major -le 5) {
   
@@ -68,7 +69,7 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
 
     $Body = @{
         "username"=$AMTUsername
-        "password"=$AMTPassword
+        "password"=$AMTPassword | ConvertFrom-SecureString -AsPlainText
     } | ConvertTo-Json
 
     $Response = Invoke-RestMethod -Uri ("https://" + $AMTManagementAddress + "/mps/login/api/v1/authorize") -Method POST -UseBasicParsing `
@@ -84,10 +85,10 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
 } elseif ($psversiontable.PSVersion.Major -gt 5) {
     $headers=@{}
     $headers.Add("Content-Type", "application/json")
-
+    
     $Body = @{
         "username"=$AMTUsername
-        "password"=$AMTPassword
+        "password"=$AMTPassword | ConvertFrom-SecureString -AsPlainText
     } | ConvertTo-Json
 
     $Response = Invoke-RestMethod -Uri ("https://" + $AMTManagementAddress + "/mps/login/api/v1/authorize") -Method POST -UseBasicParsing `
