@@ -90,7 +90,8 @@ function Get-AMTDevice {
     param (
         [Parameter(ValueFromPipeline,ValueFromPipelineByPropertyName)][string]$Name,
         [Parameter(ValueFromPipelineByPropertyName)][string]$GUID,
-        [int]$Limit = 1000
+        [int]$Limit = 1000,
+        [int]$TimeoutSec = 5
     )
 
     begin {
@@ -106,9 +107,9 @@ function Get-AMTDevice {
         if(-not $Name -and -not $GUID) {
             $returnArray = @()
             if($PSVersionTable.PSVersion.Major -le 5) {
-                $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit") -Method GET -UseBasicParsing -Headers $headers -TimeoutSec 5
+                $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit") -Method GET -UseBasicParsing -Headers $headers -TimeoutSec $TimeoutSec
             } else {
-                $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit") -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec 5
+                $ResponseArray = Invoke-RestMethod -Uri ("https://" + $Global:AMTSession.Address + "/mps/api/v1/devices?%24top=$Limit") -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec $TimeoutSec
             }
             foreach($Response in $ResponseArray){
                 $returnObject = New-Object -TypeName PSObject -Property @{
@@ -130,9 +131,9 @@ function Get-AMTDevice {
             $returnArray = @()
 
             if($PSVersionTable.PSVersion.Major -le 5) {
-                $ResponseArray = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -TimeoutSec 5
+                $ResponseArray = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -TimeoutSec $TimeoutSec
             } else {
-                $ResponseArray = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec 5
+                $ResponseArray = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec $TimeoutSec
             }
             foreach($Response in $ResponseArray){
                 $returnObject = New-Object -TypeName PSObject -Property @{
@@ -152,9 +153,9 @@ function Get-AMTDevice {
         if($null -ne $GUID -and $GUID -ne ""){
             $uri = "https://" + $Global:AMTSession.Address + "/mps/api/v1/devices/" + $GUID
             if ($psversiontable.PSVersion.Major -le 5) {
-                $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -TimeoutSec 5
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -TimeoutSec $TimeoutSec
             } else {
-                $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec 5
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec $TimeoutSec
             }
             return $Response
         }

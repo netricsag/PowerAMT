@@ -51,7 +51,8 @@ function Restart-AMTDevice {
     #>
     param(
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)][string[]]$GUID,
-        [switch]$Soft
+        [switch]$Soft,
+        [int]$TimeoutSec = 5
     )
     begin {
         if($null -eq $Global:AMTSession){
@@ -75,10 +76,10 @@ function Restart-AMTDevice {
 
                 if ($PSVersionTable.PSVersion.Major -le 5){
                     $Response = (Invoke-RestMethod -Uri $uri -Method POST `
-                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body -TimeoutSec 5).body
+                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body -TimeoutSec $TimeoutSec).body
                 } else {
                     $Response = (Invoke-RestMethod -Uri $uri -Method POST `
-                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body -SkipCertificateCheck -TimeoutSec 5).body
+                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body -SkipCertificateCheck -TimeoutSec $TimeoutSec).body
                 }
 
                 $ReturnObject = New-Object -TypeName PSObject -Property @{

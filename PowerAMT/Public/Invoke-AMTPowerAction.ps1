@@ -44,7 +44,8 @@ function Invoke-AMTPowerAction {
     #>
     param(
         [Parameter(Mandatory,ValueFromPipeline,ValueFromPipelineByPropertyName)][string[]]$GUID,
-        [Parameter(Mandatory)][int]$PowerAction
+        [Parameter(Mandatory)][int]$PowerAction,
+        [int]$TimeoutSec = 5
     )
 
     begin {
@@ -68,10 +69,10 @@ function Invoke-AMTPowerAction {
                 
                 if ($PSVersionTable.PSVersion.Major -le 5){
                     $Response = (Invoke-RestMethod -Uri $uri -Method POST `
-                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body -TimeoutSec 5).body
+                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body -TimeoutSec $TimeoutSec).body
                 } else {
                     $Response = (Invoke-RestMethod -Uri $uri -Method POST `
-                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body -SkipCertificateCheck -TimeoutSec 5).body
+                    -UseBasicParsing -ContentType 'application/json' -Headers $headers -body $body -SkipCertificateCheck -TimeoutSec $TimeoutSec).body
                 }
                 $ReturnObject = New-Object -TypeName PSObject -Property @{
                     GUID = $device

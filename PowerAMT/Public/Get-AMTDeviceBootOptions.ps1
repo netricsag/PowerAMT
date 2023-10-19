@@ -100,7 +100,8 @@ function Get-AMTDeviceBootOptions {
 
     #>
     param (
-        [Parameter(Mandatory,ValueFromPipeline,ValueFromPipelineByPropertyName)][string]$GUID
+        [Parameter(Mandatory,ValueFromPipeline,ValueFromPipelineByPropertyName)][string]$GUID,
+        [int]$TimeoutSec = 5
     )
     begin {
         if($null -eq $Global:AMTSession){
@@ -116,9 +117,9 @@ function Get-AMTDeviceBootOptions {
 
         if($null -ne $GUID -and $GUID -ne ""){
             if ($PSVersionTable.PSVersion.Major -le 5) {
-                $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -TimeoutSec 5
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -TimeoutSec $TimeoutSec
             } else {
-                $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec 5
+                $Response = Invoke-RestMethod -Uri $uri -Method GET -UseBasicParsing -Headers $headers -SkipCertificateCheck -TimeoutSec $TimeoutSec
             }
             return $Response
         }

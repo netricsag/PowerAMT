@@ -72,7 +72,8 @@ function Set-AMTDevice {
     param(
         [Parameter(Mandatory,ValueFromPipeline,ValueFromPipelineByPropertyName)][string[]]$GUID,
         [string] $Name,
-        [string[]] $Tags
+        [string[]] $Tags,
+        [int]$TimeoutSec = 5
     )
 
     begin {
@@ -109,9 +110,9 @@ function Set-AMTDevice {
                 $uri = "https://"+ $Global:AMTSession.Address + "/mps/api/v1/devices"
 
                 if ($PSVersionTable.PSVersion.Major -le 5){
-                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -UseBasicParsing -Headers $headers -ContentType 'application/json' -Body $body -TimeoutSec 5
+                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -UseBasicParsing -Headers $headers -ContentType 'application/json' -Body $body -TimeoutSec $TimeoutSec
                 } else {
-                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -UseBasicParsing -Headers $headers -ContentType 'application/json' -Body $body -SkipCertificateCheck -TimeoutSec 5
+                    $Response = Invoke-RestMethod -Uri $uri -Method PATCH -UseBasicParsing -Headers $headers -ContentType 'application/json' -Body $body -SkipCertificateCheck -TimeoutSec $TimeoutSec
                 }
 
                 return $Response

@@ -45,7 +45,8 @@ function Connect-AMTManagement {
     param(
         [Parameter(Mandatory)][string] $AMTManagementAddress,
         [Parameter(Mandatory)][string]$AMTUsername,
-        [Parameter(Mandatory)][securestring]$AMTPassword
+        [Parameter(Mandatory)][securestring]$AMTPassword,
+        [int]$TimeoutSec = 5
     )
     
 
@@ -73,7 +74,7 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
     } | ConvertTo-Json
 
     $Response = Invoke-RestMethod -Uri ("https://" + $AMTManagementAddress + "/mps/login/api/v1/authorize") -Method POST -UseBasicParsing `
-    -Body $Body -ContentType 'application/json' -Headers $headers -TimeoutSec 5
+    -Body $Body -ContentType 'application/json' -Headers $headers -TimeoutSec $TimeoutSec
 
     if($?){
         $Global:AMTSession = New-Object -TypeName PSObject -Property @{
@@ -92,7 +93,7 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
     } | ConvertTo-Json
 
     $Response = Invoke-RestMethod -Uri ("https://" + $AMTManagementAddress + "/mps/login/api/v1/authorize") -Method POST -UseBasicParsing `
-    -Body $Body -ContentType 'application/json' -Headers $headers -TimeoutSec 5 -SkipCertificateCheck
+    -Body $Body -ContentType 'application/json' -Headers $headers -TimeoutSec $TimeoutSec -SkipCertificateCheck
 
     if($?){
         $Global:AMTSession = New-Object -TypeName PSObject -Property @{
