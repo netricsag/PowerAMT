@@ -65,12 +65,15 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
 "@
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
+    $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($AMTPassword)
+    $UnsecurePassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+
     $headers=@{}
     $headers.Add("Content-Type", "application/json")
 
     $Body = @{
         "username"=$AMTUsername
-        "password"=$AMTPassword | ConvertFrom-SecureString -AsPlainText
+        "password"=$UnsecurePassword
     } | ConvertTo-Json
 
     $Response = Invoke-RestMethod -Uri ("https://" + $AMTManagementAddress + "/mps/login/api/v1/authorize") -Method POST -UseBasicParsing `
